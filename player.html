@@ -1,47 +1,22 @@
-<!<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Khopa Stream Player</title>
-
-<style>
-body{
-    margin:0;
-    background:#000;
-}
-.player{
-    width:100%;
-    height:100vh;
-    border:0;
-}
-.topbar{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    padding:10px;
-    background:rgba(0,0,0,0.6);
-    color:white;
-    font-family:Arial;
-    font-size:14px;
-}
-</style>
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Player</title>
+  <style>
+    html,body{margin:0;height:100%;background:#000;}
+    .wrap{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+    video{width:100%;height:100%;object-fit:contain;background:#000;}
+    .overlay{position:absolute;inset:0;cursor:pointer;}
+  </style>
 </head>
 <body>
-
-<div class="topbar">
-Watch Video Online
-</div>
-
-<iframe
-class="player"
-src="https://player.vimeo.com/video/1199124567"
-allow="autoplay; fullscreen; picture-in-picture"
-allowfullscreen>
-</iframe>
-
+  <div class="wrap">
+    <video controls playsinline preload="metadata" poster="https://cipwave.online/thumbnail.jpg">
+      <source src="https://cipwave.online/video.mp4" type="video/mp4">
+    </video>
+    <a class="overlay" href="https://crn77.com/4/10940697" aria-label="Open link"></a>
+  </div>
 </body>
 </html>
