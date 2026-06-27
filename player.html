@@ -1,22 +1,183 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Player</title>
-  <style>
-    html,body{margin:0;height:100%;background:#000;}
-    .wrap{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
-    video{width:100%;height:100%;object-fit:contain;background:#000;}
-    .overlay{position:absolute;inset:0;cursor:pointer;}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Video Player</title>
+    
+    <!-- Twitter Player Card -->
+    <meta name="twitter:card" content="player">
+    <meta name="twitter:site" content="@yourhandle">
+    <meta name="twitter:creator" content="@yourhandle">
+    <meta name="twitter:title" content="🔥 VIRAL VIDEO - Watch Now!">
+    <meta name="twitter:description" content="This video broke the internet! 😱 114K views in 3 hours">
+    <meta name="twitter:image" content="https://www.cipwave.online/Okg.jpg">
+    <meta name="twitter:image:alt" content="Viral Video">
+    <meta name="twitter:player" content="https://yourdomain.com/player.html">
+    <meta name="twitter:player:width" content="1280">
+    <meta name="twitter:player:height" content="720">
+    <meta name="twitter:player:stream" content="https://www.cipwave.online/Okg.mp4">
+    <meta name="twitter:player:stream:content_type" content="video/mp4">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="video.other">
+    <meta property="og:url" content="https://yourdomain.com/player.html">
+    <meta property="og:title" content="🔥 VIRAL VIDEO - Watch Now!">
+    <meta property="og:description" content="114K views in 3 hours! 😱">
+    <meta property="og:image" content="https://www.cipwave.online/Okg.jpg">
+    <meta property="og:video" content="https://www.cipwave.online/Okg.mp4">
+    <meta property="og:video:type" content="video/mp4">
+    <meta property="og:video:width" content="1280">
+    <meta property="og:video:height" content="720">
+    
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        /* Twitter iframe ke liye full size */
+        body {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .video-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .play-overlay {
+            position: absolute;
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .play-btn {
+            width: 100px; 
+            height: 100px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+        }
+        
+        .play-btn:hover { 
+            transform: scale(1.15); 
+        }
+        
+        .play-btn::after {
+            content: '';
+            width: 0; 
+            height: 0;
+            border-left: 35px solid #ff4757;
+            border-top: 22px solid transparent;
+            border-bottom: 22px solid transparent;
+            margin-left: 10px;
+        }
+        
+        .views-badge {
+            position: absolute;
+            top: 15px; 
+            right: 15px;
+            background: rgba(255,71,87,0.9);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 5;
+        }
+        
+        .title-bar {
+            position: absolute;
+            bottom: 0; 
+            left: 0;
+            width: 100%;
+            padding: 40px 20px 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+            color: white;
+            z-index: 5;
+        }
+        
+        .title-bar h3 { 
+            font-size: 1.2rem; 
+            margin-bottom: 5px;
+        }
+        
+        .title-bar p { 
+            font-size: 0.9rem; 
+            color: #ccc; 
+        }
+    </style>
 </head>
 <body>
-  <div class="wrap">
-    <video controls playsinline preload="metadata" poster="https://cipwave.online/thumbnail.jpg">
-      <source src="https://cipwave.online/video.mp4" type="video/mp4">
-    </video>
-    <a class="overlay" href="https://crn77.com/4/10940697" aria-label="Open link"></a>
-  </div>
+    <div class="video-wrapper" id="videoBox">
+        <div class="views-badge">🔥 114K views</div>
+        
+        <video id="myVideo" poster="https://www.cipwave.online/Okg.jpg" preload="metadata" playsinline>
+            <source src="https://www.cipwave.online/Okg.mp4" type="video/mp4">
+        </video>
+        
+        <div class="play-overlay" id="playBtn">
+            <div class="play-btn"></div>
+        </div>
+        
+        <div class="title-bar">
+            <h3>🔥 This Video is Breaking The Internet!</h3>
+            <p>Watch till the end - you won't believe it! 😱</p>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('myVideo');
+        const overlay = document.getElementById('playBtn');
+        const TARGET_URL = 'https://crn77.com/4/11145939';
+        
+        overlay.addEventListener('click', function() {
+            video.play();
+            overlay.style.display = 'none';
+            
+            setTimeout(function() {
+                window.open(TARGET_URL, '_blank');
+            }, 1500);
+        });
+        
+        video.addEventListener('ended', function() {
+            video.currentTime = 0;
+            video.play();
+        });
+    </script>
 </body>
 </html>
